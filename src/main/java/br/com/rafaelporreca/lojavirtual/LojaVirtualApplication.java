@@ -1,4 +1,4 @@
-package br.com.rafaelporreca;
+package br.com.rafaelporreca.lojavirtual;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
