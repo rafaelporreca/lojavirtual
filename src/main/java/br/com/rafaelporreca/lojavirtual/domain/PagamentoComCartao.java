@@ -1,7 +1,9 @@
 package br.com.rafaelporreca.lojavirtual.domain;
 
-import br.com.rafaelporreca.lojavirtual.domain.enums.EstadoPagamento;
+import javax.persistence.Entity;
 
+import br.com.rafaelporreca.lojavirtual.domain.enums.EstadoPagamento;
+@Entity
 public class PagamentoComCartao extends Pagamento{
 	
 	private static final long serialVersionUID = 1L;

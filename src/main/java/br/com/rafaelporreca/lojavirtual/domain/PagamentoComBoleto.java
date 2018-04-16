@@ -2,8 +2,10 @@ package br.com.rafaelporreca.lojavirtual.domain;
 
 import java.util.Date;
 
-import br.com.rafaelporreca.lojavirtual.domain.enums.EstadoPagamento;
+import javax.persistence.Entity;
 
+import br.com.rafaelporreca.lojavirtual.domain.enums.EstadoPagamento;
+@Entity
 public class PagamentoComBoleto extends Pagamento{
 	
 	private static final long serialVersionUID = 1L;
