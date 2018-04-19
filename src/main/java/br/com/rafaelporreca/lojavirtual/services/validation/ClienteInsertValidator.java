@@ -6,12 +6,20 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.rafaelporreca.lojavirtual.domain.Cliente;
 import br.com.rafaelporreca.lojavirtual.domain.enums.TipoCliente;
 import br.com.rafaelporreca.lojavirtual.dto.ClienteNewDTO;
+import br.com.rafaelporreca.lojavirtual.repositories.ClienteRepository;
 import br.com.rafaelporreca.lojavirtual.resources.exceptions.FieldMessage;
 import br.com.rafaelporreca.lojavirtual.services.validation.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+	
+	@Autowired
+	private ClienteRepository repo;
+	
 	@Override
 	public void initialize(ClienteInsert ann) {
 	}
@@ -25,6 +33,11 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			list.add(new FieldMessage("cpfOuCnpj","CPF inválido"));
 		}else if(objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
 			list.add(new FieldMessage("cpfOuCnpj","CNPJ inválido"));
+		}
+		
+		Cliente aux = repo.findByEmail(objDto.getEmail());
+		if(aux != null) {
+			list.add(new FieldMessage("email","E-mail já cadastrado"));
 		}
 		
 		
