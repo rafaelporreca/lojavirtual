@@ -16,11 +16,14 @@ import org.springframework.stereotype.Service;
 import br.com.rafaelporreca.lojavirtual.domain.Cidade;
 import br.com.rafaelporreca.lojavirtual.domain.Cliente;
 import br.com.rafaelporreca.lojavirtual.domain.Endereco;
+import br.com.rafaelporreca.lojavirtual.domain.enums.Perfil;
 import br.com.rafaelporreca.lojavirtual.domain.enums.TipoCliente;
 import br.com.rafaelporreca.lojavirtual.dto.ClienteDTO;
 import br.com.rafaelporreca.lojavirtual.dto.ClienteNewDTO;
 import br.com.rafaelporreca.lojavirtual.repositories.ClienteRepository;
 import br.com.rafaelporreca.lojavirtual.repositories.EnderecoRepository;
+import br.com.rafaelporreca.lojavirtual.security.UserSS;
+import br.com.rafaelporreca.lojavirtual.services.exceptions.AuthorizationException;
 import br.com.rafaelporreca.lojavirtual.services.exceptions.DataIntegrityException;
 import br.com.rafaelporreca.lojavirtual.services.exceptions.ObjectNotFoundException;
 
@@ -38,6 +41,11 @@ public class ClienteService {
 
 	
 	public Cliente find(Integer id){
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
 		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + ", Tipo: " + Cliente.class.getName()));
