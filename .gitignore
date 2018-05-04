@@ -27,3 +27,4 @@
 ###.properties###
 /src/main/resources/*.properties
 *.properties
+.properties
