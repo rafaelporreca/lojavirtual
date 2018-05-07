@@ -27,4 +27,4 @@
 ###.properties###
 /src/main/resources/*.properties
 *.properties
-application.properties
+.properties
